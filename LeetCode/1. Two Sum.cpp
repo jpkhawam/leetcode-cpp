@@ -7,13 +7,13 @@
 using std::vector, std::tuple, std::make_tuple, std::optional, std::unordered_map;
 
 optional<tuple<size_t, size_t>> two_sum(const vector<int> &nums, const int target) {
-    unordered_map<int64_t, size_t> map = {};
+    unordered_map<int, size_t> map = {};
 
     for (size_t i = 0; i < nums.size(); i++) {
         if (map.contains(target - nums[i])) {
             return make_tuple(map[target - nums[i]], i);
         }
-        map[nums[i]] = i;
+        map.emplace(nums[i], i);
     }
 
     return std::nullopt;
