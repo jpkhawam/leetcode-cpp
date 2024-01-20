@@ -1,24 +1,29 @@
 #include <string>
+#include <cassert>
 
-using std::string;
+bool is_palindrome(const std::string &s) {
+    using std::isalnum, std::tolower;
 
-class Solution {
-public:
-    bool isPalindrome(string s) {
-        size_t left = 0, right = s.length() - 1;
-        while (left <= right) {
-            if (left == right)
-                return true;
-            else if (!std::isalnum(s[left]))
-                left++;
-            else if (!std::isalnum(s[right]))
-                right--;
-            else if (std::tolower(s[left]) != std::tolower(s[right]))
-                return false;
-            else
-                left++, right--;
+    size_t left = 0;
+    size_t right = s.length() - 1;
+    while (left < right) {
+        if (!isalnum(s.at(left))) {
+            left++;
+        } else if (!isalnum(s.at(right))) {
+            right--;
+        } else if (tolower(s.at(left)) != tolower(s.at(right))) {
+            return false;
+        } else {
+            left++;
+            right--;
         }
-        return true;
     }
-};
+    return true;
+}
 
+int main() {
+    const std::string valid_palindrome = "A man, a plan, a canal: Panama";
+    const std::string invalid_palindrome = "race a car";
+    assert(is_palindrome(valid_palindrome));
+    assert(!is_palindrome(invalid_palindrome));
+}
